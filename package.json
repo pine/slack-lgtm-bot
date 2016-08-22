@@ -1,0 +1,23 @@
+{
+  "name": "slack-lgtm-bot",
+  "version": "0.1.0",
+  "description": "The LGTM bot for Slack",
+  "main": "index.js",
+  "bin": "./bin/slack-lgtm-bot",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "got": "^6.3.0",
+    "promise-retry": "^1.1.1",
+    "slack": "^7.7.1",
+    "thenify": "^3.2.0"
+  },
+  "author": {
+    "name": "Pine Mizune",
+    "email": "pinemz@gmail.com",
+    "url": "https://github.com/pine"
+  },
+  "license": "MIT"
+}

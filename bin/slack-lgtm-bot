@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+const co      = require('co')
+const slack   = require('slack')
+const thenify = require('thenify')
+const LgtmIn  = require('../lib/lgtm_in')
+
+const token     = process.env.SLACK_API_TOKEN
+const lgtmInUrl = process.env.LGTM_IN_URL || 'http://lgtm.in/g'
+const botUser   = {
+  username: process.env.SLACK_USERNAME || 'LGTM',
+  icon_url: process.env.SLACK_ICON_URL || '',
+}
+
+if (!token) {
+  console.error('`SLACK_API_TOKEN` not found')
+  process.exit(1)
+}
+
+const startedAt   = (new Date()).getTime()
+const lgtmIn      = new LgtmIn(lgtmInUrl)
+const postMessage = thenify(slack.chat.postMessage)
+const client      = slack.rtm.client()
+
+client.hello(message =>
+  console.log('Connected:', message)
+)
+
+client.message(message => co(function* () {
+  try {
+    const channel = message.channel
+    const ts      = parseFloat(message.ts) * 1000
+    const pattern = /^LGTM$/i
+
+    if (startedAt < ts && pattern.test(message.text)) {
+      console.log('Recevied:', JSON.stringify(message))
+
+      const imageUrl = yield lgtmIn.next()
+      const query    = Object.assign({ token, channel, text: imageUrl }, botUser)
+      yield postMessage.call(client, query)
+
+      console.log('Posted:', imageUrl)
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}))
+
+console.log('Listening ...')
+client.listen({ token })
+
+// vim: se et ts=2 sw=2 sts=0 ft=javascript :
