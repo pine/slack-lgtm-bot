@@ -22,9 +22,17 @@ const lgtmIn      = new LgtmIn(lgtmInUrl)
 const postMessage = thenify(slack.chat.postMessage)
 const client      = slack.rtm.client()
 
-client.hello(message =>
+client.hello(message => co(function* () {
   console.log('Connected:', message)
-)
+
+  try {
+    const teamInfo = yield thenify(slack.team.info)({ token })
+    delete teamInfo['team']['icon']
+    console.log('Team:', JSON.stringify(teamInfo))
+  } catch (e) {
+    console.error(e)
+  }
+}))
 
 client.message(message => co(function* () {
   try {
