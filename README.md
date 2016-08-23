@@ -10,9 +10,9 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
 
 ## Options
 
-- `SLACK\_USERNAME` Slack username
-- `SLACK\_ICON\_URL` Slack icon URL
-- `LGTM\_IN\_URL`
+- `SLACK_USERNAME` Slack username
+- `SLACK_ICON_URL` Slack icon URL
+- `LGTM_IN_URL`
   - API endpoint of [lgtm.in](http://lgtm.in/)
   - `http://lgtm.in/g` or `http://lgtm.in/g/username`
 
