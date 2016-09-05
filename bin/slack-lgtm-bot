@@ -8,9 +8,9 @@ const RtmClient = require('@slack/client').RtmClient
 const WebClient = require('@slack/client').WebClient
 const LgtmIn    = require('../lib/lgtm_in')
 
-const token     = process.env.SLACK_API_TOKEN
-const lgtmInUrl = process.env.LGTM_IN_URL || 'http://lgtm.in/g'
-const botUser   = {
+const token      = process.env.SLACK_API_TOKEN
+const lgtmInUrls = []
+const botUser    = {
   username: process.env.SLACK_USERNAME || 'LGTM',
   icon_url: process.env.SLACK_ICON_URL || '',
 }
@@ -20,8 +20,25 @@ if (!token) {
   process.exit(1)
 }
 
+if (process.env.LGTM_IN_URL) {
+  lgtmInUrls.push(process.env.LGTM_IN_URL)
+}
+
+if (process.env.LGTM_IN_URLS) {
+  const urls = process.env.LGTM_IN_URLS.split(',')
+  for (let url of urls) {
+    if (url) {
+      lgtmInUrls.push(url)
+    }
+  }
+}
+
+if (lgtmInUrls.length === 0) {
+  lgtmInUrls.push('http://lgtm.in/g')
+}
+
 const startedAt = (new Date()).getTime()
-const lgtmIn    = new LgtmIn(lgtmInUrl)
+const lgtmIn    = new LgtmIn(lgtmInUrls)
 const rtm       = new RtmClient(token, { autoReconnect: true, logLevel: 'error' })
 const web       = new WebClient(token)
 

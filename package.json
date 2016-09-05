@@ -12,6 +12,7 @@
     "co": "^4.6.0",
     "fancy-log": "^1.2.0",
     "got": "^6.3.0",
+    "lodash.sample": "^4.2.1",
     "promise-retry": "^1.1.1",
     "thenify": "^3.2.0"
   },
