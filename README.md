@@ -13,6 +13,7 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
 - `SLACK_API_TOKEN` Slack API token
 - `SLACK_USERNAME` Slack username
 - `SLACK_ICON_URL` Slack icon URL
+- `SLACK_ICON_URLS` Slack icon URLs (comma separated)
 - `LGTM_IN_URL`
   - API endpoint of [lgtm.in](http://lgtm.in/)
   - `http://lgtm.in/g` or `http://lgtm.in/g/username`
