@@ -19,7 +19,7 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
   - Default: `'http://lgtm.in/g'`
   - API endpoint of [lgtm.in](http://lgtm.in/)
   - If you have personal lgtm.in list, set to `'http://lgtm.in/g/username'`
-- `LGTM_URLS` Slack API endpoint URLs (comma separated)
+- `LGTM_IN_URLS` Slack API endpoint URLs (comma separated)
 
 ## License
 MIT
