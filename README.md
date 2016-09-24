@@ -12,11 +12,14 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
 
 - `SLACK_API_TOKEN` Slack API token
 - `SLACK_USERNAME` Slack username
+  - Default: `'LGTM'`
 - `SLACK_ICON_URL` Slack icon URL
-- `SLACK_ICON_URLS` Slack icon URLs (comma separated)
+  - Default: `''`
 - `LGTM_IN_URL`
+  - Default: `'http://lgtm.in/g'`
   - API endpoint of [lgtm.in](http://lgtm.in/)
-  - `http://lgtm.in/g` or `http://lgtm.in/g/username`
+  - If you have personal lgtm.in list, set to `'http://lgtm.in/g/username'`
+- `LGTM_URLS` Slack API endpoint URLs (comma separated)
 
 ## License
 MIT
