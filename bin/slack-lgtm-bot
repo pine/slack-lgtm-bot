@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
-const co      = require('co')
-const thenify = require('thenify')
-const log     = require('fancy-log')
-
-const RtmClient = require('@slack/client').RtmClient
-const WebClient = require('@slack/client').WebClient
-const LgtmIn    = require('../lib/lgtm_in')
+const log      = require('fancy-log')
+const SlackBot = require('../lib/slack_bot')
 
 const token      = process.env.SLACK_API_TOKEN
 const lgtmInUrls = []
@@ -37,44 +32,7 @@ if (lgtmInUrls.length === 0) {
   lgtmInUrls.push('http://lgtm.in/g')
 }
 
-const startedAt = (new Date()).getTime()
-const lgtmIn    = new LgtmIn(lgtmInUrls)
-const rtm       = new RtmClient(token, { autoReconnect: true, logLevel: 'error' })
-const web       = new WebClient(token)
-
-log('Listening ...')
-rtm.start()
-
-rtm.on('authenticated', message => co(function* () {
-  log('Connected')
-
-  try {
-    const teamInfo = yield thenify(web.team.info.bind(web.team))()
-    delete teamInfo['team']['icon']
-    log('Team:', JSON.stringify(teamInfo))
-  } catch (e) {
-    log.error(e)
-  }
-}))
-
-rtm.on('message', message => co(function* () {
-  try {
-    const channel = message.channel
-    const ts      = parseFloat(message.ts) * 1000
-    const pattern = /^LGTM$/i
-
-    if (startedAt < ts && pattern.test(message.text)) {
-      log('Recevied:', JSON.stringify(message))
-
-      const imageUrl = yield lgtmIn.next()
-      yield (web.chat.postMessage.bind(web.chat))(channel, imageUrl, botUser)
-
-      log('Posted:', imageUrl)
-    }
-  } catch (e) {
-    log.error(e)
-  }
-}))
-
+const bot = new SlackBot({ token, lgtmInUrls, botUser })
+bot.listen()
 
 // vim: se et ts=2 sw=2 sts=0 ft=javascript :
