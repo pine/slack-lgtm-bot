@@ -9,6 +9,7 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
 ```
 
 ## Options
+You can set any options uses environment variables.
 
 - `SLACK_API_TOKEN` Slack API token
 - `SLACK_USERNAME` Slack username
@@ -20,6 +21,9 @@ $ SLACK_API_TOKEN=XXX slack-lgtm-bot
   - API endpoint of [lgtm.in](http://lgtm.in/)
   - If you have personal lgtm.in list, set to `'http://lgtm.in/g/username'`
 - `LGTM_IN_URLS` Slack API endpoint URLs (comma separated)
+- `SLACK_CHANNELS` Slack channels of bot enabled (comma separated)
+  - Default: `''` (not limited)
+  - Example: `'general,random'`
 
 ## License
 MIT

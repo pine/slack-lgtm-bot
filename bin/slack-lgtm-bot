@@ -4,16 +4,21 @@ const log      = require('fancy-log')
 const SlackBot = require('../lib/slack_bot')
 
 const token      = process.env.SLACK_API_TOKEN
-const lgtmInUrls = []
 const botUser    = {
   username: process.env.SLACK_USERNAME || 'LGTM',
   icon_url: process.env.SLACK_ICON_URL || '',
 }
+const lgtmInUrls = []
+const channels   = []
+
+// ----------------------------------------------------------------------------
 
 if (!token) {
   log.error('`SLACK_API_TOKEN` not found')
   process.exit(1)
 }
+
+// ----------------------------------------------------------------------------
 
 if (process.env.LGTM_IN_URL) {
   lgtmInUrls.push(process.env.LGTM_IN_URL)
@@ -32,7 +37,22 @@ if (lgtmInUrls.length === 0) {
   lgtmInUrls.push('http://lgtm.in/g')
 }
 
-const bot = new SlackBot({ token, lgtmInUrls, botUser })
+log('LGTM.in URLs:', lgtmInUrls)
+
+// ----------------------------------------------------------------------------
+
+if (process.env.SLACK_CHANNELS) {
+  const values = process.env.SLACK_CHANNELS.split(',')
+  for (let value of values) {
+    if (value) { channels.push(value) }
+  }
+}
+
+log('Slack channels:', channels.length > 0 ? channels : 'not limited')
+
+// ----------------------------------------------------------------------------
+
+const bot = new SlackBot({ token, lgtmInUrls, botUser, channels })
 bot.listen()
 
 // vim: se et ts=2 sw=2 sts=0 ft=javascript :
