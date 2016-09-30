@@ -1,6 +1,10 @@
 slack-lgtm-bot
 --------------
 
+## Requirements
+
+- Node.js v4.5.0 ~
+
 ## Getting Started
 
 ```
