@@ -10,6 +10,7 @@
   "dependencies": {
     "@slack/client": "^3.5.4",
     "co": "^4.6.0",
+    "co-fs": "^1.2.0",
     "fancy-log": "^1.2.0",
     "got": "^6.3.0",
     "lodash.sample": "^4.2.1",

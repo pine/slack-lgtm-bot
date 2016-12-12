@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+const https    = require('https')
+const path     = require('path')
+const co       = require('co')
+const fs       = require('co-fs')
 const log      = require('fancy-log')
 const SlackBot = require('../lib/slack_bot')
 
@@ -52,7 +56,17 @@ log('Slack channels:', channels.length > 0 ? channels : 'not limited')
 
 // ----------------------------------------------------------------------------
 
-const bot = new SlackBot({ token, lgtmInUrls, botUser, channels })
-bot.listen()
+co(function* () {
+  // see also. https://letsencrypt.org/certificates/
+  const certs = [ 'isrgrootx1.pem', 'letsencryptauthorityx3.pem' ]
+    .map(f => path.join(__dirname, '..', 'etc', f))
+    .map(f => fs.readFile(f))
+
+  const ca = https.globalAgent.options.ca || []
+  ca.push(... yield certs)
+
+  const bot = new SlackBot({ token, lgtmInUrls, botUser, channels, ca })
+  bot.listen()
+})
 
 // vim: se et ts=2 sw=2 sts=0 ft=javascript :
