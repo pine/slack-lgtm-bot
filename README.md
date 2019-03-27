@@ -1,6 +1,8 @@
 slack-lgtm-bot
 --------------
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pine/slack-lgtm-bot.svg)](https://greenkeeper.io/)
+
 ## Requirements
 
 - Node.js v4.5.0 ~
