@@ -1,3 +1,9 @@
+# DEPRECATED
+
+:warning: This repository is no longer maintained.
+
+---
+
 slack-lgtm-bot
 --------------
 
